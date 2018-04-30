@@ -4,7 +4,7 @@ import project5.classes.ArrayBinaryTree;
 
 public class MainTest {
 
-	//Test2
+	//Test3
 	
 	public static void main(String[] args) {
 		ArrayBinaryTree<Integer> emptyTree = new ArrayBinaryTree<>();
