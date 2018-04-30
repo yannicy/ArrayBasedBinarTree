@@ -80,8 +80,7 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 	public Position<E> parent(Position<E> p) throws InvalidPositionException {
 		BinaryTreeNode<E> node = (BinaryTreeNode<E>) p;
 		if (node.getIndex() == 1) {
-			// throw (new InvalidPositionException());
-			System.out.println("HHH");
+			throw (new InvalidPositionException());
 		}
 		return tree[node.getIndex() / 2];
 	}
@@ -140,10 +139,10 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 	@Override
 	public Position<E> addRoot(E e) throws UnemptyTreeException {
 		// if not empty..... 
-		if(isEmpty() == false) {
+		if(this.isEmpty() == false) {
 			throw (new UnemptyTreeException());
 		}else {
-			n = 1;
+			n = n + 1;
 			tree[1] = new BinaryTreeNode<E>(e, 1);
 			return tree[1];
 		}
@@ -154,13 +153,14 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 	public Position<E> insertChild(Position<E> p, E e) throws InvalidPositionException {
 		// TODO Auto-generated method stub
 		BinaryTreeNode<E> node = (BinaryTreeNode<E>) p;
-		
 		if(tree[node.getIndex() * 2] == null){
+			n = n+1;
 			tree[node.getIndex() * 2] = new BinaryTreeNode<E>(e, node.getIndex() * 2);
 			return tree[node.getIndex() * 2];
 		}else if (tree[node.getIndex()*2+1] == null){
+			n = n+1;
 			tree[node.getIndex() * 2+1] = new BinaryTreeNode<E>(e, node.getIndex()*2+1);
-			return tree[node.getIndex() * 2];
+			return tree[node.getIndex() * 2+1];
 		}else {
 			throw (new InvalidPositionException());
 		}
@@ -168,14 +168,25 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 	}
 	@Override
 	public E replaceElement(Position<E> p, E e) throws InvalidPositionException {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public void swapElements(Position<E> p, Position<E> q) throws InvalidPositionException {
-		// TODO Auto-generated method stub
-
+		// TODO Auto-generated method stub$
+		BinaryTreeNode<E> nodeP = (BinaryTreeNode<E>) p;
+		BinaryTreeNode<E> nodeQ = (BinaryTreeNode<E>) q;
+		BinaryTreeNode<E> nodeTemp;
+		
+		// IF statement um Probleme abzufangen -> p & q = null, p & q in verschiedenen trees
+		
+		
+		nodeTemp = tree[nodeP.getIndex()];
+	
+		tree[nodeP.getIndex()] = tree[nodeQ.getIndex()];
+		tree[nodeQ.getIndex()] = nodeTemp;
+		
 	}
 
 	@Override
@@ -188,7 +199,7 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 	public boolean isEmpty() {
 		// tree.length <= capacity && zusätzlich?
 		// Noch prüfen ob es andere Elemente hat?
-		if(tree[1] == null) {
+		if(n == 0) {
 			return true;
 		}
 		return false;
@@ -210,33 +221,63 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 
 	@Override
 	public Position<E> sibling(Position<E> p) throws InvalidPositionException {
-		// TODO Auto-generated method stub
+		/*BinaryTreeNode<E> node = (BinaryTreeNode<E>) p;
+		if(this.parent(node)) {
+			
+		}
+		if (node.getIndex() == 1) {
+			throw (new InvalidPositionException());
+		}
+		this.parent(node);
+		ArrayBinaryTree<E> test;
+		test.parent(node);
+		parent
+		if(tree[node.getIndex() == tree.])*/
 		return null;
 	}
 
 	@Override
 	public boolean hasLeft(Position<E> p) throws InvalidPositionException {
-		// TODO Auto-generated method stub
-		return false;
+		BinaryTreeNode<E> node = (BinaryTreeNode<E>) p;
+		if(tree[node.getIndex()*2] != null) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 
 	@Override
 	public boolean hasRight(Position<E> p) throws InvalidPositionException {
-		// TODO Auto-generated method stub
-		return false;
+		BinaryTreeNode<E> node = (BinaryTreeNode<E>) p;
+		if(tree[node.getIndex()*2+1] != null) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 
 	@Override
 	public Position<E> insertLeft(Position<E> p, E e) throws InvalidPositionException {
-		// TODO Auto-generated method stub
-		
-		return null;
+		BinaryTreeNode<E> node = (BinaryTreeNode<E>) p;
+		if(tree[node.getIndex() * 2] == null){
+			n = n+1;
+			tree[node.getIndex() * 2] = new BinaryTreeNode<E>(e, node.getIndex() * 2);
+			return tree[node.getIndex() * 2];
+		}else {
+			throw (new InvalidPositionException());
+		}
 	}
 
 	@Override
 	public Position<E> insertRight(Position<E> p, E e) throws InvalidPositionException {
-		// TODO Auto-generated method stub
-		return null;
+		BinaryTreeNode<E> node = (BinaryTreeNode<E>) p;
+		if(tree[node.getIndex() * 2+1] == null){
+			n = n+1;
+			tree[node.getIndex() * 2+1] = new BinaryTreeNode<E>(e, node.getIndex() * 2);
+			return tree[node.getIndex() * 2+1];
+		}else {
+			throw (new InvalidPositionException());
+		}
 	}
 
 	@Override

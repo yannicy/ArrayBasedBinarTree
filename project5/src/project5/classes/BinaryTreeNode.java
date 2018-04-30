@@ -5,9 +5,9 @@ import project5.interfaces.Position;
 public class BinaryTreeNode<E> implements Position<E>{
 	
 	private E e;
-	private Integer index;
+	private int index;
 	
-	public BinaryTreeNode(E e, Integer index) {
+	public BinaryTreeNode(E e, int index) {
 		this.e = e;
 		this.index = index;
 	}
