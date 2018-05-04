@@ -10,23 +10,27 @@ public class MainTest {
 		// ArrayBinaryTree<Integer> rootTree = new ArrayBinaryTree<Integer>(3);
 		
 		System.out.println("Empty tree: ");
-		emptyTree.expandCapacity();
 		System.out.println(emptyTree.toString());
 		emptyTree.addRoot(5);
+		System.out.println(emptyTree.toString());
+		
 		
 		Position<Integer> pos = emptyTree.root();
 		Position<Integer> pos2 = emptyTree.insertChild(pos, 2);
-		Position<Integer> pos3 = emptyTree.insertChild(pos, 8);
+		System.out.println(emptyTree.toString());
+		/*Position<Integer> pos3 = emptyTree.insertChild(pos, 8);
 		Position<Integer> posParent = emptyTree.parent(pos2);
 
 		System.out.println(emptyTree.size());
 		System.out.println(emptyTree.toString());
 		
 		emptyTree.swapElements(pos, pos2);
-		//emptyTree.insertChild(pos, 8);
 		System.out.println(emptyTree.size());
 		System.out.println(emptyTree.toString());
 		System.out.println("TEST: " + pos);
+		emptyTree.insertChildren(pos3, 9, 0);
+		System.out.println(emptyTree.toString());
+		System.out.println(emptyTree.size()); /*
 		// System.out.println(emptyTree.isEmpty());
 		/*System.out.println(emptyTree.size());
 		//emptyTree.addRoot(4); 
