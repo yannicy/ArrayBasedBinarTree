@@ -97,9 +97,14 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 	 */
 	@Override
 	public List<E> elements() {
-		return null;
+		List<E> elements = new ArrayList<>();
+		for (int i = 0; i < tree.length; i++) {
+			if(tree[i] != null) {
+				elements.add(tree[i].element());
+			}
+		}
+		return elements;
 	}
-
 	/**
 	 * Positions.
 	 *
@@ -107,9 +112,13 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 	 */
 	@Override
 	public List<Position<E>> positions() {
-		// TODO Auto-generated method stub
-
-		return null;
+		List<Position<E>> positions = new ArrayList<>();
+		for (int i = 0; i < tree.length; i++) {
+			if(tree[i] != null) {
+				positions.add(tree[i]);
+			}
+		}
+		return positions;
 	}
 
 	/**
@@ -260,10 +269,12 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 	 */
 	@Override
 	public int depth(Position<E> p) throws InvalidPositionException {
-		// p.element();
-		// BinaryTreeNode<E> node = (BinaryTreeNode<E>) p;
-		// node.getIndex();
-		return 0;
+		BinaryTreeNode<E> node = (BinaryTreeNode<E>) p;
+		if(this.isRoot(node)) {
+			return 0;
+		}
+		else
+			return 1 + depth(parent(node));
 	}
 
 	/**
