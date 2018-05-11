@@ -150,7 +150,6 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 	public Position<E> parent(Position<E> p) throws InvalidPositionException {
 		BinaryTreeNode<E> node = (BinaryTreeNode<E>) p;
 		if (node == null || node.getTreePointer() != this) {
-			// if (this.isRoot(p) == true) {
 			throw (new InvalidPositionException());
 		} else {
 			return tree[node.getIndex() / 2];
@@ -173,10 +172,10 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 		List<Position<E>> children = new ArrayList<>(2);
 		if (node == null || node.getTreePointer() != this) {
 			throw (new InvalidPositionException());
-		} else if (hasLeft(p)) {
-			children.add(leftChild(p));
-			if (hasRight(p)) {
-				children.add(rightChild(p));
+		} else if (hasLeft(node)) {
+			children.add(leftChild(node));
+			if (hasRight(node)) {
+				children.add(rightChild(node));
 			}
 		}
 		return children;
@@ -198,16 +197,16 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 
 		if (node == null || node.getTreePointer() != this) {
 			throw (new InvalidPositionException());
-		} else if (this.isInternal(p)) {
-			descendants.addAll(this.children(p));
+		} else if (this.isInternal(node)) {
+			descendants.addAll(this.children(node));
 
-			if (this.hasLeft(p)) {
-				Position<E> pLeft = this.leftChild(p);
-				descendants.addAll(descendants(pLeft));
+			if (this.hasLeft(node)) {
+				Position<E> nodeLeft = this.leftChild(node);
+				descendants.addAll(descendants(nodeLeft));
 			}
-			if (this.hasRight(p)) {
-				Position<E> pRight = this.rightChild(p);
-				descendants.addAll(descendants(pRight));
+			if (this.hasRight(node)) {
+				Position<E> nodeRight = this.rightChild(node);
+				descendants.addAll(descendants(nodeRight));
 			}
 		}
 
@@ -596,7 +595,26 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 	 */
 	@Override
 	public void RemoveSubtree(Position<E> p) throws InvalidPositionException {
-		// TODO Auto-generated method stub
+		BinaryTreeNode<E> node = (BinaryTreeNode<E>) p;
+
+		if (this.hasLeft(node)) {
+			BinaryTreeNode<E> nodeLeft = (BinaryTreeNode<E>) this.leftChild(node);
+			if (this.isInternal(nodeLeft)) {
+				tree[nodeLeft.getIndex()] = null;
+				RemoveSubtree(nodeLeft);
+			} else if (this.isExternal(nodeLeft)) {
+				tree[nodeLeft.getIndex()] = null;
+			}
+		}
+		if (this.hasRight(node)) {
+			BinaryTreeNode<E> nodeRight = (BinaryTreeNode<E>) this.rightChild(node);
+			if (this.isInternal(nodeRight)) {
+				tree[nodeRight.getIndex()] = null;
+				RemoveSubtree(nodeRight);
+			} else if (this.isExternal(nodeRight)) {
+				tree[nodeRight.getIndex()] = null;
+			}
+		}
 	}
 
 	@Override

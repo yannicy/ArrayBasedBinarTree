@@ -51,7 +51,9 @@ public class MainTest {
 		System.out.println(tree1.toString());
 		System.out.println(tree1.descendants(posRoot));
 		System.out.println(tree1.ancestors(posL7));
-		System.out.println(tree1.parent(posRoot));
+		System.out.println(posRoot.toString());
+		tree1.RemoveSubtree(posRoot);
+		System.out.println("test" + tree1.toString());
 
 		BinaryTree<Integer> tree2 = new ArrayBinaryTree<>();
 		Position<Integer> posRoot2 = tree2.addRoot(1);
