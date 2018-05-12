@@ -1,0 +1,39 @@
+
+-----New
+private BinaryTreeNode<E>[] tree;
+	private int n;
+	private final int capacity = 2;
+
+	// creates an empty binary tree
+	public ArrayBinaryTree() {
+		this.n = 0;
+		this.tree = new BinaryTreeNode<E>[capacity];
+	}
+	
+	// creates a binray tree with a certain values as root
+	public ArrayBinaryTree(E root) {
+		this.n = 1;
+		this.tree = new BinaryTreeNode[capacity];
+		this.tree[1] = new BinaryTreeNode<E>(root, 1);
+	}
+	
+---- Old
+	private E[] tree;
+	private int n;
+	private final int capacity = 2;
+
+	// creates an empty binary tree
+	public ArrayBinaryTree() {
+		this.n = 0;
+		this.tree = (E[]) new Object[capacity];
+	}
+	
+	// creates a binray tree with a certain values as root
+	public ArrayBinaryTree(E root) {
+		this.n = 1;
+		this.tree = (E[]) new Object[capacity];
+		tree[1] = root;
+	}
+	
+
+

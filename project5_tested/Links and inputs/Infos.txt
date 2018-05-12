@@ -1,0 +1,72 @@
+https://www.geeksforgeeks.org/binary-tree-array-implementation/
+
+IsExternal(p) --> Wenn keine Kinder hat
+return (hasLeft(p) OR hasRight(p))
+
+
+parent(p)
+if p.parent = null then trhow illegalPositionException
+
+else 
+return p.parent 
+
+
+insertChildren(p, e1, e1)
+if isInternal(p) then throw IllegalPositionException
+
+else 
+insertLeft(p.e1)
+insertRight(p.e2)
+
+
+addroot(e)
+new binaryTree
+
+
+insertLeftChild(p)
+if isInternal(p) then throw IllegalPositionException
+
+else 
+insertLeft(p.e1)
+
+
+
+return n --> zurückgeben wie gross der Baum ist -> Size
+size() --> O(n)
+is empty or not
+return sizeOf(root())
+
+sizeOf(p) --> gibt die Grösse des Subtrees zurück (Ausgangspunkt + alle Kinder)
+s<-0
+//if isExternal(p) then return 1
+else for each q in chlidren(p) do --> q: children
+s<- s + sizeOf(q)
+reutrn s+1
+
+
+sizeInternal()
+if isEmpty() then return 0
+else return sizeInternalOf(root)
+
+sizeInternalOf(p)
+if 
+isExternal(p) then return 0
+
+else
+s <- 0
+foreach a in children(p) do
+s<- s + sizeInternalOf(p)
+reutrn s+1
+
+
+sizeExternalOf(p)
+if 
+isInternal(p) then return 1
+
+else
+s <- 0
+foreach a in children(p) do
+s<- s + sizeExternalOf(p)
+reutrn 0
+
+

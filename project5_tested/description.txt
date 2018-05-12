@@ -1,0 +1,30 @@
+PROJECT 5: Array-Based Binary Trees
+
+Implement a binary tree ADTs in Java using growable arrays.
+
+For this consider the given Java interfaces BinaryTree<E> and Position<E>. Write corresponding classes ArrayBinaryTree<E> and BinaryTreeNode<E>, which implement these interfaces.
+
+Override toString() to obtain a human-readable string representation of your tree:
+ - “” = empty tree
+ - “1” = tree of size 1 with 1 at the root
+ - “1 (2 3)” = tree of size 3 (the root 1 has left child 2 and right child 3)
+ - “1 (2 (4 5) 3)” = tree of size 5 (the left child 2 of the root 1 has as left child 4, as right child 5)
+ - “1 (2 .)” = root has only a left child 2, but no right child
+ - “1 (. 2 (3 4))” = root has only a right child 2 (which has left child 3 and right child 4) but no left child
+ - etc.
+
+For a binary tree, insertChild(p) works as follows:
+- if p is external, insert a left child
+- else, if p has no left child, insert a left child
+- else, if p has no right child, insert a right child
+- else, throw an exception
+
+For your implementation, follow the guidelines and pseudo-code algorithms from the course slides and exercises.
+
+Write one or several example programs as a first test.
+
+Test your implementation with JUnit. Corresponding JUnit test classes are given. Your  solution needs to pass all the tests.
+
+Document your classes and the given interfaces with JavaDoc.
+
+DEADLINE: May 14th (code+slides as zip to lhp2@bfh.ch)
