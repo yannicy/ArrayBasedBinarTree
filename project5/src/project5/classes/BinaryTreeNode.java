@@ -15,7 +15,8 @@ public class BinaryTreeNode<E> implements Position<E> {
 	private BinaryTree<E> treePointer;
 
 	/**
-	 * Instantiates a new binary tree node.
+	 * Constructor
+	 * BinaryTreeNode: Instantiates a new binary tree node.
 	 *
 	 * @param e the e
 	 * @param index the index
@@ -28,7 +29,7 @@ public class BinaryTreeNode<E> implements Position<E> {
 	}
 
 	/**
-	 * Element.
+	 * Element: returns the element of a node
 	 *
 	 * @return the e
 	 */
@@ -38,7 +39,8 @@ public class BinaryTreeNode<E> implements Position<E> {
 	}
 
 	/**
-	 * Gets the index.
+	 * getIndex: returns the index
+	 * 
 	 * @return the index
 	 */
 	public int getIndex() {
@@ -46,18 +48,21 @@ public class BinaryTreeNode<E> implements Position<E> {
 	}
 
 	/**
-	 * Gets the tree pointer.
+	 * getTreePointer: returns the treePointer
+	 * 
 	 * @return the tree pointer
 	 */
 	public BinaryTree<E> getTreePointer() {
 		return this.treePointer;
 	}
 
-	// (index, e)
+	/**
+	 * toString: Formats the nodes of a tree in a readable String
+	 * 
+	 * @return the formatted String of the nodes
+	 */
 	public String toString() {
-		// TODO
-//		return "Element->[" + this.element() + "] Index->[" + this.getIndex() + "]";
-		return this.e.toString();
+		return "Element->[" + this.element() + "] with Index->[" + this.getIndex() + "]";
 	}
 
 }

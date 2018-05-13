@@ -1,7 +1,6 @@
 package project5.classes;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import project5.exceptions.EmptyTreeException;
@@ -12,18 +11,18 @@ import project5.interfaces.Position;
 
 public class ArrayBinaryTree<E> implements BinaryTree<E> {
 
-	// tree: binary tree
+	/** the tree */
 	private BinaryTreeNode<E>[] tree;
 
-	// n: number of nodes
+	/** The n: number of nodes in the tree. */
 	private int n;
 
-	// capacity(constant var): inizial size of the tree
+	/** The capacity: inizial size of the tree */
 	private final int capacity = 2;
 
-	// Constructors
 	/**
-	 * creates an empty binary tree
+	 * Constructor
+	 * ArrayBinaryTree: creates an empty binary tree
 	 */
 	@SuppressWarnings("unchecked")
 	public ArrayBinaryTree() {
@@ -32,7 +31,8 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 	}
 
 	/**
-	 * ArrayBinaryTree creates a binary tree with a root node
+	 * Constructor
+	 * ArrayBinaryTree: creates a binary tree with a root node
 	 * 
 	 * @param root
 	 */
@@ -41,9 +41,8 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 		this.addRoot(root);
 	}
 
-	// Methods
 	/**
-	 * extends the capacity of an array by doubling its length
+	 * expandCapacity: extends the capacity of an array by doubling its length
 	 */
 	@SuppressWarnings("unchecked")
 	public void expandCapacity() {
@@ -55,8 +54,8 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 	}
 
 	/**
-	 * checkCapacity used in methods insertLeft() & insertRight() checks if the
-	 * array is big enough to store new nodes
+	 * checkCapacity: checks if the array is big enough to store new nodes
+	 * used in methods insertLeft() & insertRight()
 	 * 
 	 * @param index
 	 */
@@ -66,32 +65,31 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 	}
 
 	/**
-	 * Height. returns the maximum number of ancestors of the tree throws an
-	 * exception if the tree contains no nodes
+	 * Height: returns the maximum number of ancestors of the tree 
+	 * throws an exception if the tree contains no nodes
 	 *
 	 * @return the height of the tree
 	 * @throws EmptyTreeException
-	 *             the empty tree exception
 	 */
 	@Override
 	public int height() throws EmptyTreeException {
 		if (this.isEmpty()) {
 			throw (new EmptyTreeException());
 		} else {
-			int h = 0;
+			int height = 0;
 			for (Position<E> p : positions()) {
 				if (isExternal(p)) {
-					h = Math.max(h, depth(p));
+					height = Math.max(height, depth(p));
 				}
 			}
-			return h;
+			return height;
 		}
 	}
 
 	/**
-	 * Elements.
+	 * Elements: List with the elements of the nodes from the tree
 	 *
-	 * @return the list
+	 * @return the list with elements of nodes
 	 */
 	@Override
 	public List<E> elements() {
@@ -105,9 +103,9 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 	}
 
 	/**
-	 * Positions.
+	 * Positions: List with the position of the nodes from the tree
 	 *
-	 * @return the list
+	 * @return the list with positions of nodes
 	 */
 	@Override
 	public List<Position<E>> positions() {
@@ -121,11 +119,11 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 	}
 
 	/**
-	 * Root.
+	 * Root: returns the root node of the tree
+	 * throws an exception if the tree contains no nodes
 	 *
-	 * @return the position
+	 * @return the position of the root node
 	 * @throws EmptyTreeException
-	 *             the empty tree exception
 	 */
 	@Override
 	public Position<E> root() throws EmptyTreeException {
@@ -136,15 +134,12 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 	}
 
 	/**
-	 * Parent. returns the position of the parent element of the node p throws an
-	 * InvalidPositionException depending on the method isRoot() and if node p is
-	 * the root node
+	 * Parent: returns the position of the parent element of the node p 
+	 * throws an InvalidPositionException if p is equal null or not from this tree
 	 *
 	 * @param p
-	 *            the p
-	 * @return the position
+	 * @return the position form parent of p
 	 * @throws InvalidPositionException
-	 *             the invalid position exception
 	 */
 	@Override
 	public Position<E> parent(Position<E> p) throws InvalidPositionException {
@@ -157,49 +152,40 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 	}
 
 	/**
-	 * Children. returns an ArrayList with all children of p throws an
-	 * InvalidPositionException depending on the methods hasLeft() / hasRight()
+	 * Children: returns an List with all children of p 
+	 * throws an InvalidPositionException depending on the methods hasLeft() / hasRight()
 	 * 
 	 * @param p
-	 *            the p
-	 * @return the list
+	 * @return the list with all children of p
 	 * @throws InvalidPositionException
-	 *             the invalid position exception
 	 */
 	@Override
 	public List<Position<E>> children(Position<E> p) throws InvalidPositionException {
 		BinaryTreeNode<E> node = (BinaryTreeNode<E>) p;
 		List<Position<E>> children = new ArrayList<>(2);
-		if (node == null || node.getTreePointer() != this) {
-			throw (new InvalidPositionException());
-		} else if (hasLeft(node)) {
+		if (hasLeft(node)) {
 			children.add(leftChild(node));
-			if (hasRight(node)) {
-				children.add(rightChild(node));
-			}
+		}
+		if (hasRight(node)) {
+			children.add(rightChild(node));
 		}
 		return children;
 	}
 
 	/**
-	 * Descendants.
+	 * Descendants: returns an List with all descendants of p
+	 * throws an InvalidPositionException depending on the methods isInternal / hasLeft() / hasRight()
 	 *
 	 * @param p
-	 *            the p
-	 * @return the list
+	 * @return the list with all descendants of p
 	 * @throws InvalidPositionException
-	 *             the invalid position exception
 	 */
 	@Override
 	public List<Position<E>> descendants(Position<E> p) throws InvalidPositionException {
 		List<Position<E>> descendants = new ArrayList<>();
 		BinaryTreeNode<E> node = (BinaryTreeNode<E>) p;
-
-		if (node == null || node.getTreePointer() != this) {
-			throw (new InvalidPositionException());
-		} else if (this.isInternal(node)) {
+		if (this.isInternal(node)) {
 			descendants.addAll(this.children(node));
-
 			if (this.hasLeft(node)) {
 				Position<E> nodeLeft = this.leftChild(node);
 				descendants.addAll(descendants(nodeLeft));
@@ -209,48 +195,43 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 				descendants.addAll(descendants(nodeRight));
 			}
 		}
-
 		return descendants;
 	}
 
 	/**
-	 * Ancestors.
+	 * Ancestors: returns an List with all ancestors of p
+	 * throws an InvalidPositionException depending on the method parent()
 	 *
 	 * @param p
-	 *            the p
-	 * @return the list
+	 * @return the list with all ancestors of p
 	 * @throws InvalidPositionException
-	 *             the invalid position exception
 	 */
 	@Override
 	public List<Position<E>> ancestors(Position<E> p) throws InvalidPositionException {
 		List<Position<E>> ancestors = new ArrayList<>();
-
 		if (this.parent(p) != null) {
 			ancestors.add(this.parent(p));
 			Position<E> pParent = this.parent(p);
 			ancestors.addAll(ancestors(pParent));
 		}
-
 		return ancestors;
 	}
 
 	/**
-	 * Checks if is root. checks if the node p is the root node or not throws an
-	 * InvalidPositionException if p equal null or not from this tree
+	 * isRoot: checks if the node p is the root node or not 
+	 * throws an InvalidPositionException if p equal null or not from this tree
 	 * 
 	 * @param p
-	 *            the p
 	 * @return true, if is root
 	 * @throws InvalidPositionException
-	 *             the invalid position exception
 	 */
 	@Override
 	public boolean isRoot(Position<E> p) throws InvalidPositionException {
 		BinaryTreeNode<E> node = (BinaryTreeNode<E>) p;
 		if (node == null || node.getTreePointer() != this) {
 			throw (new InvalidPositionException());
-		} else if (node.getIndex() != 1) {
+		}
+		if (node.getIndex() != 1) {
 			return false;
 		} else {
 			return true;
@@ -258,22 +239,21 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 	}
 
 	/**
-	 * Checks if is internal. checks if the node p has at least one child throws an
-	 * InvalidPositionException if p is equal null or not from this tree throws also
+	 * isInternal: checks if the node p has at least one child 
+	 * throws an InvalidPositionException if p is equal null or not from this tree throws also
 	 * an InvalidPositionException depending on the methods hasLeft() / hasRight()
 	 * 
 	 * @param p
-	 *            the p
 	 * @return true, if is internal
 	 * @throws InvalidPositionException
-	 *             the invalid position exception
 	 */
 	@Override
 	public boolean isInternal(Position<E> p) throws InvalidPositionException {
 		BinaryTreeNode<E> node = (BinaryTreeNode<E>) p;
 		if (node == null || node.getTreePointer() != this) {
 			throw (new InvalidPositionException());
-		} else if (this.hasLeft(p) || this.hasRight(p)) {
+		}
+		if (this.hasLeft(p) || this.hasRight(p)) {
 			return true;
 		} else {
 			return false;
@@ -281,10 +261,9 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 	}
 
 	/**
-	 * Checks if is external. checks if the node p is not internal. returns true if
-	 * p hasn't got any children -> therefore is a leaf throws also an
-	 * InvalidPositionException depending on the methods isInternal / hasLeft() /
-	 * hasRight()
+	 * isExternal: checks if the node p is not internal.
+	 * returns true if p hasn't got any children -> therefore is a leaf
+	 * throws an InvalidPositionException depending on the methods isInternal / hasLeft() / hasRight()
 	 * 
 	 * @param p
 	 * @return true, if is external
@@ -296,10 +275,11 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 	}
 
 	/**
-	 * depth
+	 * depth: the depth from node p
+	 * throws an InvalidPositionException depending on the methods isRoot() / parent()
 	 * 
 	 * @param p
-	 * @return returns depth of the tree
+	 * @return returns depth of of the node p form the tree
 	 * @throws InvalidPositionException
 	 */
 	@Override
@@ -307,13 +287,14 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 		BinaryTreeNode<E> node = (BinaryTreeNode<E>) p;
 		if (this.isRoot(node)) {
 			return 0;
-		} else
+		} else {
 			return 1 + depth(parent(node));
+		}
 	}
 
 	/**
-	 * addRoot adds a root node (at index 1) with the value e to the tree if the
-	 * tree is empty throws an UnemptyTreeException if the tree is not empty
+	 * addRoot: adds a root node (at index 1) with the value e to the tree 
+	 * throws an UnemptyTreeException if the tree is not empty
 	 * 
 	 * @param e
 	 * @return the root node
@@ -328,14 +309,12 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 			tree[1] = new BinaryTreeNode<E>(e, 1, this);
 			return tree[1];
 		}
-
 	}
 
 	/**
-	 * insertChild insert a node p with the value e as a left child checks if p is
-	 * an external node if there is already a left child insert the node as a right
-	 * child throws an InvalidPositionException depending on the methods hasLeft() /
-	 * hasRight()
+	 * insertChild: insert a node p with the value e as a left child 
+	 * checks if p is an external node if there is already a left child insert the node as a right child 
+	 * throws an InvalidPositionException depending on the methods hasLeft() / hasRight() / isInternal()
 	 * 
 	 * @param p
 	 * @param e
@@ -346,9 +325,11 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 	public Position<E> insertChild(Position<E> p, E e) throws InvalidPositionException {
 		if (this.isExternal(p)) {
 			return this.insertLeft(p, e);
-		} else if (this.hasLeft(p) == false) {
+		}
+		if (this.hasLeft(p) == false) {
 			return this.insertLeft(p, e);
-		} else if (this.hasRight(p) == false) {
+		}
+		if (this.hasRight(p) == false) {
 			return this.insertRight(p, e);
 		} else {
 			throw (new InvalidPositionException());
@@ -356,8 +337,8 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 	}
 
 	/**
-	 * replaceElement replaces the value of the node p with e throws an
-	 * InvalidPositionException if the node is equal null or not from this tree
+	 * replaceElement: replaces the value of the node p with e 
+	 * throws an InvalidPositionException if the node is equal null or not from this tree
 	 * 
 	 * @param p
 	 * @param e
@@ -376,9 +357,9 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 	}
 
 	/**
-	 * swapElements switches the nodes p and q throws an InvalidPositionException if
-	 * both nodes are equal null throws also an InvalidPositionException depending
-	 * on the methods replaceElement()
+	 * swapElements: switches the nodes p and q 
+	 * throws an InvalidPositionException if both nodes are equal null 
+	 * throws also an InvalidPositionException depending on the methods replaceElement()
 	 * 
 	 * @param p
 	 * @param q
@@ -395,7 +376,9 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 	}
 
 	/**
-	 * returns the number of nodes from the tree
+	 * size: returns the number of nodes from the tree
+	 * 
+	 * @return number of nodes from a tree
 	 */
 	@Override
 	public int size() {
@@ -403,8 +386,9 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 	}
 
 	/**
-	 * checks if there are any nodes in the tree or not returns false if there are
-	 * nodes in the tree
+	 * isEmpty: checks if there are any nodes in the tree 
+	 * 
+	 * @return true if there are no nodes in the tree
 	 */
 	@Override
 	public boolean isEmpty() {
@@ -415,13 +399,12 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 	}
 
 	/**
-	 * Left child.
+	 * Left child: checks if p has a left child and returns its position
+	 * throws an InvalidPositionException depending on the methods hasLeft()
 	 *
 	 * @param p
-	 *            the p
-	 * @return the position
+	 * @return the position of the left child of p
 	 * @throws InvalidPositionException
-	 *             the invalid position exception
 	 */
 	@Override
 	public Position<E> leftChild(Position<E> p) throws InvalidPositionException {
@@ -434,13 +417,12 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 	}
 
 	/**
-	 * Right child.
+	 * Right child: checks if p has a right child and returns its position
+	 * throws an InvalidPositionException depending on the methods hasRight()
 	 *
 	 * @param p
-	 *            the p
 	 * @return the position
 	 * @throws InvalidPositionException
-	 *             the invalid position exception
 	 */
 	@Override
 	public Position<E> rightChild(Position<E> p) throws InvalidPositionException {
@@ -453,38 +435,45 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 	}
 
 	/**
-	 * Sibling.
+	 * Sibling: checks if p has a sibling and returns its position
+	 * throws an InvalidPositionException depending on the methods hasLeft() / hasRight()
 	 *
 	 * @param p
-	 *            the p
-	 * @return the position
+	 * @return the position of the sibling of p
 	 * @throws InvalidPositionException
-	 *             the invalid position exception
 	 */
 	@Override
 	public Position<E> sibling(Position<E> p) throws InvalidPositionException {
-		if (this.hasLeft(this.parent(p))) {
-			return leftChild(this.parent(p));
-		} else {
-			return rightChild(this.parent(p));
+		BinaryTreeNode<E> node = (BinaryTreeNode<E>) p;
+		BinaryTreeNode<E> nodeParent = (BinaryTreeNode<E>) this.parent(node);
+		if (this.hasLeft(nodeParent) && this.hasRight(nodeParent)) {
+			int indexLeftNode = nodeParent.getIndex() * 2;
+			int indexRightNode = nodeParent.getIndex() * 2 + 1;
+			if (node == tree[indexLeftNode]) {
+				return tree[node.getIndex() + 1];
+			}
+			if (node == tree[indexRightNode]) {
+				return tree[node.getIndex() - 1];
+			}
 		}
+		throw (new InvalidPositionException());
 	}
 
 	/**
-	 * Checks for left.
+	 * hasLeft: checks if p has a left child
+	 * throws an InvalidPositionException if p is equal null or not from this tree
 	 *
 	 * @param p
-	 *            the p
-	 * @return true, if successful
+	 * @return true, if p has a left Child
 	 * @throws InvalidPositionException
-	 *             the invalid position exception
 	 */
 	@Override
 	public boolean hasLeft(Position<E> p) throws InvalidPositionException {
 		BinaryTreeNode<E> node = (BinaryTreeNode<E>) p;
 		if (node == null || node.getTreePointer() != this) {
 			throw (new InvalidPositionException());
-		} else if (node.getIndex() * 2 < tree.length && tree[node.getIndex() * 2] != null) {
+		}
+		if (node.getIndex() * 2 < tree.length && tree[node.getIndex() * 2] != null) {
 			return true;
 		} else {
 			return false;
@@ -492,20 +481,20 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 	}
 
 	/**
-	 * Checks for right.
+	 * hasRight: checks if p has a right child
+	 * throws an InvalidPositionException if p is equal null or not from this tree
 	 *
 	 * @param p
-	 *            the p
-	 * @return true, if successful
+	 * @return true, if p has a right child
 	 * @throws InvalidPositionException
-	 *             the invalid position exception
 	 */
 	@Override
 	public boolean hasRight(Position<E> p) throws InvalidPositionException {
 		BinaryTreeNode<E> node = (BinaryTreeNode<E>) p;
 		if (node == null || node.getTreePointer() != this) {
 			throw (new InvalidPositionException());
-		} else if (node.getIndex() * 2 + 1 < tree.length && tree[node.getIndex() * 2 + 1] != null) {
+		}
+		if (node.getIndex() * 2 + 1 < tree.length && tree[node.getIndex() * 2 + 1] != null) {
 			return true;
 		} else {
 			return false;
@@ -513,15 +502,14 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 	}
 
 	/**
-	 * Insert left.
+	 * Insert left: insert a left child and raise the size of the tree
+	 * throws an InvalidPositionException if there is already a left child 
+	 * and depending on the methods hasLeft() 
 	 *
 	 * @param p
-	 *            the p
 	 * @param e
-	 *            the e
-	 * @return the position
+	 * @return the position of the inserted left child
 	 * @throws InvalidPositionException
-	 *             the invalid position exception
 	 */
 	@Override
 	public Position<E> insertLeft(Position<E> p, E e) throws InvalidPositionException {
@@ -538,15 +526,14 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 	}
 
 	/**
-	 * Insert right.
+	 * Insert right: insert a right child and raise the size of the tree
+	 * throws an InvalidPositionException if there is already a right child 
+	 * and depending on the methods hasRight() 
 	 *
 	 * @param p
-	 *            the p
 	 * @param e
-	 *            the e
-	 * @return the position
+	 * @return the position of the inserted right child
 	 * @throws InvalidPositionException
-	 *             the invalid position exception
 	 */
 	@Override
 	public Position<E> insertRight(Position<E> p, E e) throws InvalidPositionException {
@@ -563,16 +550,13 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 	}
 
 	/**
-	 * Insert children.
+	 * Insert children: insert a left child and a right child if p is external
+	 * throws an InvalidPositionException if p is internal
 	 *
 	 * @param p
-	 *            the p
 	 * @param e1
-	 *            the e 1
 	 * @param e2
-	 *            the e 2
 	 * @throws InvalidPositionException
-	 *             the invalid position exception
 	 */
 	@Override
 	public void insertChildren(Position<E> p, E e1, E e2) throws InvalidPositionException {
@@ -586,40 +570,75 @@ public class ArrayBinaryTree<E> implements BinaryTree<E> {
 	}
 
 	/**
-	 * Removes the subtree.
+	 * RemoveSubtree: Removes p and his subtrees
+	 * throws an InvalidPositionException depending on the methods children() / hasLeft() / hasRight()
 	 *
 	 * @param p
-	 *            the p
 	 * @throws InvalidPositionException
-	 *             the invalid position exception
 	 */
 	@Override
 	public void RemoveSubtree(Position<E> p) throws InvalidPositionException {
 		BinaryTreeNode<E> node = (BinaryTreeNode<E>) p;
-
-		if (this.hasLeft(node)) {
-			BinaryTreeNode<E> nodeLeft = (BinaryTreeNode<E>) this.leftChild(node);
-			if (this.isInternal(nodeLeft)) {
+		if (this.children(node) != null) {
+			this.n = n - 1;
+			if (this.hasLeft(node)) {
+				BinaryTreeNode<E> nodeLeft = (BinaryTreeNode<E>) this.leftChild(node);
 				tree[nodeLeft.getIndex()] = null;
 				RemoveSubtree(nodeLeft);
-			} else if (this.isExternal(nodeLeft)) {
-				tree[nodeLeft.getIndex()] = null;
 			}
-		}
-		if (this.hasRight(node)) {
-			BinaryTreeNode<E> nodeRight = (BinaryTreeNode<E>) this.rightChild(node);
-			if (this.isInternal(nodeRight)) {
+			if (this.hasRight(node)) {
+				BinaryTreeNode<E> nodeRight = (BinaryTreeNode<E>) this.rightChild(node);
 				tree[nodeRight.getIndex()] = null;
 				RemoveSubtree(nodeRight);
-			} else if (this.isExternal(nodeRight)) {
-				tree[nodeRight.getIndex()] = null;
+			}
+			if (!this.hasLeft(node) && !this.hasRight(node)) {
+				tree[node.getIndex()] = null;
 			}
 		}
 	}
 
+	/**
+	 * toString: displays the tree as String
+	 */
 	@Override
 	public String toString() {
-		return Arrays.toString(tree);
+		if (this.isEmpty()) {
+			return "";
+		}
+		return preOrderToString(root(), "", "");
+	}
+
+	/**
+	 * preOrderToString: Formats the tree in a readable String
+	 * throws an InvalidPositionException depending on the methods hasLeft() / hasRight()
+	 * 
+	 * @param p
+	 * @param preString
+	 * @param postString
+	 * @throws InvalidPositionException
+	 * @return the formatted String of the tree
+	 */
+	private String preOrderToString(Position<E> p, String preString, String postString) throws InvalidPositionException {
+		BinaryTreeNode<E> node = (BinaryTreeNode<E>) p;
+		String val = "";
+		if (!this.isEmpty()) {
+			val += preString + node.element() + postString;
+			preString = "";
+			postString = "";
+			if (this.hasLeft(node)) {
+				if (!this.hasRight(node)) {
+					postString += " .)";
+				}
+				val += " (" + preOrderToString(this.leftChild(node), preString, postString) + "";
+			}
+			if (this.hasRight(node)) {
+				if (!this.hasLeft(node)) {
+					preString += "(. ";
+				}
+				val += " " + preOrderToString(this.rightChild(node), preString, postString) + ")";
+			}
+		}
+		return val;
 	}
 
 }
